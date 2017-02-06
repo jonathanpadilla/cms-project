@@ -14,14 +14,14 @@
   <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600'>
 
   <!-- Theme CSS -->
-  <link rel="stylesheet" type="text/css" href="assets/skin/default_skin/css/theme.css">
-  <link rel="stylesheet" type="text/css" href="assets/skin/default_skin/css/cms2.css">
+  <link rel="stylesheet" type="text/css" href="{{ absolute_url(asset('assets/skin/default_skin/css/theme.css')) }}">
+  <link rel="stylesheet" type="text/css" href="{{ absolute_url(asset('assets/skin/default_skin/css/cmsproject.css')) }}">
 
   <!-- Admin Forms CSS -->
-  <link rel="stylesheet" type="text/css" href="assets/admin-tools/admin-forms/css/admin-forms.css">
+  <link rel="stylesheet" type="text/css" href="{{ absolute_url(asset('assets/admin-tools/admin-forms/css/admin-forms.css')) }}">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="assets/img/favicon.ico">
+  <link rel="shortcut icon" href="{{ absolute_url(asset('assets/img/favicon.ico')) }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -39,30 +39,17 @@
   <!-- BEGIN: PAGE SCRIPTS -->
 
   <!-- jQuery -->
-  <script src="vendor/jquery/jquery-1.11.1.min.js"></script>
-  <script src="vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
-
-  <!-- HighCharts Plugin -->
-  <script src="vendor/plugins/highcharts/highcharts.js"></script>
-
-  <!-- Sparklines Plugin -->
-  <script src="vendor/plugins/sparkline/jquery.sparkline.min.js"></script>
-
-  <!-- Simple Circles Plugin -->
-  <script src="vendor/plugins/circles/circles.js"></script>
-
-  <!-- JvectorMap Plugin + US Map (more maps in plugin/assets folder) -->
-  <script src="vendor/plugins/jvectormap/jquery.jvectormap.min.js"></script>
-  <script src="vendor/plugins/jvectormap/assets/jquery-jvectormap-us-lcc-en.js"></script> 
+  <script src="{{ absolute_url(asset('vendor/jquery/jquery-1.11.1.min.js')) }}"></script>
+  <script src="{{ absolute_url(asset('vendor/jquery/jquery_ui/jquery-ui.min.js')) }}"></script>
 
   <!-- Theme Javascript -->
-  <script src="assets/js/utility/utility.js"></script>
-  <script src="assets/js/demo/demo.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/app.js"></script>
+  <script src="{{ absolute_url(asset('assets/js/utility/utility.js')) }}"></script>
+  <script src="{{ absolute_url(asset('assets/js/demo/demo.js')) }}"></script>
+  <script src="{{ absolute_url(asset('assets/js/main.js')) }}"></script>
+  <script src="{{ absolute_url(asset('assets/js/app.js')) }}"></script>
 
   <!-- Widget Javascript -->
-  <script src="assets/js/demo/widgets.js"></script>
+  <script src="{{ absolute_url(asset('assets/js/demo/widgets.js')) }}"></script>
   <script type="text/javascript">
   jQuery(document).ready(function() {
 

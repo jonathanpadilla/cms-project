@@ -1,0 +1,32 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+<!-- Start: Main -->
+<div id="main">
+
+	{% include 'AdminBundle:layouts:topbar.html.twig' %}
+
+	{% include 'AdminBundle:layouts:sidebar_left.html.twig' %}
+
+	<!-- Start: Content-Wrapper -->
+	<section id="content_wrapper">
+
+		{% include 'AdminBundle:layouts:breadcrumbs.html.twig' %}
+
+		<!-- Begin: Content -->
+		<section id="content" class="animated fadeIn">
+
+		{% block content %}
+		{% endblock %}
+
+		</section>
+		<!-- End: Content -->
+
+		{% include 'AdminBundle:layouts:footer.html.twig' %}
+
+	</section>
+	<!-- End: Content-Wrapper -->
+
+</div>
+<!-- End: Main -->
+{% endblock %}
