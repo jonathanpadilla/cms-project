@@ -14,7 +14,7 @@ namespace Symfony\Component\Security\Tests\Http\Firewall;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Security;
 
 class UsernamePasswordFormAuthenticationListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,16 +24,16 @@ class UsernamePasswordFormAuthenticationListenerTest extends \PHPUnit_Framework_
     public function testHandleWhenUsernameLength($username, $ok)
     {
         $request = Request::create('/login_check', 'POST', array('_username' => $username));
-        $request->setSession($this->getMock('Symfony\Component\HttpFoundation\Session\SessionInterface'));
+        $request->setSession($this->getMockBuilder('Symfony\Component\HttpFoundation\Session\SessionInterface')->getMock());
 
-        $httpUtils = $this->getMock('Symfony\Component\Security\Http\HttpUtils');
+        $httpUtils = $this->getMockBuilder('Symfony\Component\Security\Http\HttpUtils')->getMock();
         $httpUtils
             ->expects($this->any())
             ->method('checkRequestPath')
             ->will($this->returnValue(true))
         ;
 
-        $failureHandler = $this->getMock('Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface');
+        $failureHandler = $this->getMockBuilder('Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface')->getMock();
         $failureHandler
             ->expects($ok ? $this->never() : $this->once())
             ->method('onAuthenticationFailure')
@@ -48,17 +48,17 @@ class UsernamePasswordFormAuthenticationListenerTest extends \PHPUnit_Framework_
         ;
 
         $listener = new UsernamePasswordFormAuthenticationListener(
-            $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface'),
+            $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface')->getMock(),
             $authenticationManager,
-            $this->getMock('Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface'),
+            $this->getMockBuilder('Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface')->getMock(),
             $httpUtils,
             'TheProviderKey',
-            $this->getMock('Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface'),
+            $this->getMockBuilder('Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface')->getMock(),
             $failureHandler,
             array('require_previous_session' => false)
         );
 
-        $event = $this->getMock('Symfony\Component\HttpKernel\Event\GetResponseEvent', array(), array(), '', false);
+        $event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')->disableOriginalConstructor()->getMock();
         $event
             ->expects($this->any())
             ->method('getRequest')
@@ -71,8 +71,8 @@ class UsernamePasswordFormAuthenticationListenerTest extends \PHPUnit_Framework_
     public function getUsernameForLength()
     {
         return array(
-            array(str_repeat('x', SecurityContextInterface::MAX_USERNAME_LENGTH + 1), false),
-            array(str_repeat('x', SecurityContextInterface::MAX_USERNAME_LENGTH - 1), true),
+            array(str_repeat('x', Security::MAX_USERNAME_LENGTH + 1), false),
+            array(str_repeat('x', Security::MAX_USERNAME_LENGTH - 1), true),
         );
     }
 }

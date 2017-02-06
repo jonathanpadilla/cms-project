@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Tests\Fixtures\KernelForTest;
 use Symfony\Component\HttpKernel\Tests\Fixtures\KernelForOverrideName;
-use Symfony\Component\HttpKernel\Tests\Fixtures\FooBarBundle;
 
 class KernelTest extends \PHPUnit_Framework_TestCase
 {
@@ -65,7 +64,7 @@ class KernelTest extends \PHPUnit_Framework_TestCase
 
     public function testBootSetsTheContainerToTheBundles()
     {
-        $bundle = $this->getMock('Symfony\Component\HttpKernel\Bundle\Bundle');
+        $bundle = $this->getMockBuilder('Symfony\Component\HttpKernel\Bundle\Bundle')->getMock();
         $bundle->expects($this->once())
             ->method('setContainer');
 
@@ -162,7 +161,7 @@ class KernelTest extends \PHPUnit_Framework_TestCase
 
     public function testShutdownCallsShutdownOnAllBundles()
     {
-        $bundle = $this->getMock('Symfony\Component\HttpKernel\Bundle\Bundle');
+        $bundle = $this->getMockBuilder('Symfony\Component\HttpKernel\Bundle\Bundle')->getMock();
         $bundle->expects($this->once())
             ->method('shutdown');
 
@@ -174,7 +173,7 @@ class KernelTest extends \PHPUnit_Framework_TestCase
 
     public function testShutdownGivesNullContainerToAllBundles()
     {
-        $bundle = $this->getMock('Symfony\Component\HttpKernel\Bundle\Bundle');
+        $bundle = $this->getMockBuilder('Symfony\Component\HttpKernel\Bundle\Bundle')->getMock();
         $bundle->expects($this->at(3))
             ->method('setContainer')
             ->with(null);
@@ -311,48 +310,6 @@ EOF;
         }
 
         $this->assertEquals($expected, $output);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testLegacyIsClassInActiveBundleFalse()
-    {
-        $kernel = $this->getKernelMockForIsClassInActiveBundleTest();
-
-        $this->assertFalse($kernel->isClassInActiveBundle('Not\In\Active\Bundle'));
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testLegacyIsClassInActiveBundleFalseNoNamespace()
-    {
-        $kernel = $this->getKernelMockForIsClassInActiveBundleTest();
-
-        $this->assertFalse($kernel->isClassInActiveBundle('NotNamespacedClass'));
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testLegacyIsClassInActiveBundleTrue()
-    {
-        $kernel = $this->getKernelMockForIsClassInActiveBundleTest();
-
-        $this->assertTrue($kernel->isClassInActiveBundle(__NAMESPACE__.'\Fixtures\FooBarBundle\SomeClass'));
-    }
-
-    protected function getKernelMockForIsClassInActiveBundleTest()
-    {
-        $bundle = new FooBarBundle();
-
-        $kernel = $this->getKernel(array('getBundles'));
-        $kernel->expects($this->once())
-            ->method('getBundles')
-            ->will($this->returnValue(array($bundle)));
-
-        return $kernel;
     }
 
     public function testGetRootDir()

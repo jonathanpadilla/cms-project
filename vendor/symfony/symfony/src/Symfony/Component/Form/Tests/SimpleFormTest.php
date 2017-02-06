@@ -313,6 +313,10 @@ class SimpleFormTest extends AbstractFormTest
         $this->assertTrue($form->isValid());
     }
 
+    /**
+     * @group legacy
+     * @expectedDeprecation Call Form::isValid() with an unsubmitted form %s.
+     */
     public function testNotValidIfNotSubmitted()
     {
         $this->assertFalse($this->form->isValid());
@@ -654,12 +658,11 @@ class SimpleFormTest extends AbstractFormTest
 
     public function testEmptyDataFromClosure()
     {
-        $test = $this;
         $form = $this->getBuilder()
-            ->setEmptyData(function ($form) use ($test) {
+            ->setEmptyData(function ($form) {
                 // the form instance is passed to the closure to allow use
                 // of form data when creating the empty value
-                $test->assertInstanceOf('Symfony\Component\Form\FormInterface', $form);
+                $this->assertInstanceOf('Symfony\Component\Form\FormInterface', $form);
 
                 return 'foo';
             })
@@ -685,8 +688,8 @@ class SimpleFormTest extends AbstractFormTest
 
     public function testCreateView()
     {
-        $type = $this->getMock('Symfony\Component\Form\ResolvedFormTypeInterface');
-        $view = $this->getMock('Symfony\Component\Form\FormView');
+        $type = $this->getMockBuilder('Symfony\Component\Form\ResolvedFormTypeInterface')->getMock();
+        $view = $this->getMockBuilder('Symfony\Component\Form\FormView')->getMock();
         $form = $this->getBuilder()->setType($type)->getForm();
 
         $type->expects($this->once())
@@ -699,10 +702,10 @@ class SimpleFormTest extends AbstractFormTest
 
     public function testCreateViewWithParent()
     {
-        $type = $this->getMock('Symfony\Component\Form\ResolvedFormTypeInterface');
-        $view = $this->getMock('Symfony\Component\Form\FormView');
-        $parentForm = $this->getMock('Symfony\Component\Form\Test\FormInterface');
-        $parentView = $this->getMock('Symfony\Component\Form\FormView');
+        $type = $this->getMockBuilder('Symfony\Component\Form\ResolvedFormTypeInterface')->getMock();
+        $view = $this->getMockBuilder('Symfony\Component\Form\FormView')->getMock();
+        $parentForm = $this->getMockBuilder('Symfony\Component\Form\Test\FormInterface')->getMock();
+        $parentView = $this->getMockBuilder('Symfony\Component\Form\FormView')->getMock();
         $form = $this->getBuilder()->setType($type)->getForm();
         $form->setParent($parentForm);
 
@@ -720,9 +723,9 @@ class SimpleFormTest extends AbstractFormTest
 
     public function testCreateViewWithExplicitParent()
     {
-        $type = $this->getMock('Symfony\Component\Form\ResolvedFormTypeInterface');
-        $view = $this->getMock('Symfony\Component\Form\FormView');
-        $parentView = $this->getMock('Symfony\Component\Form\FormView');
+        $type = $this->getMockBuilder('Symfony\Component\Form\ResolvedFormTypeInterface')->getMock();
+        $view = $this->getMockBuilder('Symfony\Component\Form\FormView')->getMock();
+        $parentView = $this->getMockBuilder('Symfony\Component\Form\FormView')->getMock();
         $form = $this->getBuilder()->setType($type)->getForm();
 
         $type->expects($this->once())
@@ -731,16 +734,6 @@ class SimpleFormTest extends AbstractFormTest
             ->will($this->returnValue($view));
 
         $this->assertSame($view, $form->createView($parentView));
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testGetErrorsAsString()
-    {
-        $this->form->addError(new FormError('Error!'));
-
-        $this->assertEquals("ERROR: Error!\n", $this->form->getErrorsAsString());
     }
 
     public function testFormCanHaveEmptyName()
@@ -857,7 +850,7 @@ class SimpleFormTest extends AbstractFormTest
 
     public function testViewDataMayBeArrayAccessIfDataClassIsNull()
     {
-        $arrayAccess = $this->getMock('\ArrayAccess');
+        $arrayAccess = $this->getMockBuilder('\ArrayAccess')->getMock();
         $config = new FormConfigBuilder('name', null, $this->dispatcher);
         $config->addViewTransformer(new FixedDataTransformer(array(
             '' => '',
@@ -902,12 +895,10 @@ class SimpleFormTest extends AbstractFormTest
 
     public function testSubmittingWrongDataIsIgnored()
     {
-        $test = $this;
-
         $child = $this->getBuilder('child', $this->dispatcher);
-        $child->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($test) {
+        $child->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             // child form doesn't receive the wrong data that is submitted on parent
-            $test->assertNull($event->getData());
+            $this->assertNull($event->getData());
         });
 
         $parent = $this->getBuilder('parent', new EventDispatcher())
@@ -921,7 +912,7 @@ class SimpleFormTest extends AbstractFormTest
 
     public function testHandleRequestForwardsToRequestHandler()
     {
-        $handler = $this->getMock('Symfony\Component\Form\RequestHandlerInterface');
+        $handler = $this->getMockBuilder('Symfony\Component\Form\RequestHandlerInterface')->getMock();
 
         $form = $this->getBuilder()
             ->setRequestHandler($handler)
@@ -1007,10 +998,9 @@ class SimpleFormTest extends AbstractFormTest
 
     public function testPostSubmitDataIsNullIfInheritData()
     {
-        $test = $this;
         $form = $this->getBuilder()
-            ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($test) {
-                $test->assertNull($event->getData());
+            ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+                $this->assertNull($event->getData());
             })
             ->setInheritData(true)
             ->getForm();
@@ -1020,10 +1010,9 @@ class SimpleFormTest extends AbstractFormTest
 
     public function testSubmitIsNeverFiredIfInheritData()
     {
-        $test = $this;
         $form = $this->getBuilder()
-            ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($test) {
-                $test->fail('The SUBMIT event should not be fired');
+            ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+                $this->fail('The SUBMIT event should not be fired');
             })
             ->setInheritData(true)
             ->getForm();
@@ -1034,7 +1023,7 @@ class SimpleFormTest extends AbstractFormTest
     public function testInitializeSetsDefaultData()
     {
         $config = $this->getBuilder()->setData('DEFAULT')->getFormConfig();
-        $form = $this->getMock('Symfony\Component\Form\Form', array('setData'), array($config));
+        $form = $this->getMockBuilder('Symfony\Component\Form\Form')->setMethods(array('setData'))->setConstructorArgs(array($config))->getMock();
 
         $form->expects($this->once())
             ->method('setData')
@@ -1055,17 +1044,6 @@ class SimpleFormTest extends AbstractFormTest
         $child->setParent($parent);
 
         $child->initialize();
-    }
-
-    /**
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Custom resolver "Symfony\Component\Form\Tests\Fixtures\CustomOptionsResolver" must extend "Symfony\Component\OptionsResolver\OptionsResolver".
-     */
-    public function testCustomOptionsResolver()
-    {
-        $fooType = new Fixtures\LegacyFooType();
-        $resolver = new Fixtures\CustomOptionsResolver();
-        $fooType->setDefaultOptions($resolver);
     }
 
     protected function createForm()

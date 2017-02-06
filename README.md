@@ -1,4 +1,4 @@
-cms_project
-===========
+cms
+===
 
-A Symfony project created on January 8, 2017, 10:13 pm.
+A Symfony project created on January 30, 2017, 8:12 pm.

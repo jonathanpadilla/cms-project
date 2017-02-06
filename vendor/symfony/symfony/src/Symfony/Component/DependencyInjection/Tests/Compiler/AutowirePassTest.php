@@ -213,13 +213,13 @@ class AutowirePassTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $container->getDefinition('coop_tilleuls')->getArguments());
         $this->assertEquals('autowired.symfony\component\dependencyinjection\tests\compiler\dunglas', $container->getDefinition('coop_tilleuls')->getArgument(0));
 
-        $dunglasDefinition = $container->getDefinition('autowired.symfony\component\dependencyinjection\tests\compiler\dunglas');
+        $dunglasDefinition = $container->getDefinition('autowired.Symfony\Component\DependencyInjection\Tests\Compiler\Dunglas');
         $this->assertEquals(__NAMESPACE__.'\Dunglas', $dunglasDefinition->getClass());
         $this->assertFalse($dunglasDefinition->isPublic());
         $this->assertCount(1, $dunglasDefinition->getArguments());
         $this->assertEquals('autowired.symfony\component\dependencyinjection\tests\compiler\lille', $dunglasDefinition->getArgument(0));
 
-        $lilleDefinition = $container->getDefinition('autowired.symfony\component\dependencyinjection\tests\compiler\lille');
+        $lilleDefinition = $container->getDefinition('autowired.Symfony\Component\DependencyInjection\Tests\Compiler\Lille');
         $this->assertEquals(__NAMESPACE__.'\Lille', $lilleDefinition->getClass());
     }
 
@@ -429,6 +429,39 @@ class AutowirePassTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @dataProvider getCreateResourceTests
+     */
+    public function testCreateResourceForClass($className, $isEqual)
+    {
+        $startingResource = AutowirePass::createResourceForClass(
+            new \ReflectionClass(__NAMESPACE__.'\ClassForResource')
+        );
+        $newResource = AutowirePass::createResourceForClass(
+            new \ReflectionClass(__NAMESPACE__.'\\'.$className)
+        );
+
+        // hack so the objects don't differ by the class name
+        $startingReflObject = new \ReflectionObject($startingResource);
+        $reflProp = $startingReflObject->getProperty('class');
+        $reflProp->setAccessible(true);
+        $reflProp->setValue($startingResource, __NAMESPACE__.'\\'.$className);
+
+        if ($isEqual) {
+            $this->assertEquals($startingResource, $newResource);
+        } else {
+            $this->assertNotEquals($startingResource, $newResource);
+        }
+    }
+
+    public function getCreateResourceTests()
+    {
+        return array(
+            array('IdenticalClassResource', true),
+            array('ClassChangedConstructorArgs', false),
+        );
+    }
+
     public function testIgnoreServiceWithClassNotExisting()
     {
         $container = new ContainerBuilder();
@@ -595,6 +628,29 @@ class MultipleArgumentsOptionalScalarLast
 class MultipleArgumentsOptionalScalarNotReallyOptional
 {
     public function __construct(A $a, $foo = 'default_val', Lille $lille)
+    {
+    }
+}
+
+/*
+ * Classes used for testing createResourceForClass
+ */
+class ClassForResource
+{
+    public function __construct($foo, Bar $bar = null)
+    {
+    }
+
+    public function setBar(Bar $bar)
+    {
+    }
+}
+class IdenticalClassResource extends ClassForResource
+{
+}
+class ClassChangedConstructorArgs extends ClassForResource
+{
+    public function __construct($foo, Bar $bar, $baz)
     {
     }
 }

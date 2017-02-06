@@ -158,9 +158,6 @@ class DateTimeToLocalizedStringTransformerTest extends DateTimeTestCase
         $this->assertEquals('02*2010*03 04|05|06', $transformer->transform($this->dateTime));
     }
 
-    /**
-     * @requires PHP 5.5
-     */
     public function testTransformDateTimeImmutableTimezones()
     {
         $transformer = new DateTimeToLocalizedStringTransformer('America/New_York', 'Asia/Hong_Kong');
@@ -238,6 +235,15 @@ class DateTimeToLocalizedStringTransformerTest extends DateTimeTestCase
         $dateTime->setTimezone(new \DateTimeZone('America/New_York'));
 
         $this->assertDateTimeEquals($dateTime, $transformer->reverseTransform('03.02.2010, 04:05'));
+    }
+
+    public function testReverseTransformOnlyDateWithDifferentTimezones()
+    {
+        $transformer = new DateTimeToLocalizedStringTransformer('Europe/Berlin', 'Pacific/Tahiti', \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, \IntlDateFormatter::GREGORIAN, 'yyyy-MM-dd');
+
+        $dateTime = new \DateTime('2017-01-10 11:00', new \DateTimeZone('Europe/Berlin'));
+
+        $this->assertDateTimeEquals($dateTime, $transformer->reverseTransform('2017-01-10'));
     }
 
     public function testReverseTransformWithDifferentPatterns()
