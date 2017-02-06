@@ -14,3 +14,11 @@ $ composer require friendsofsymfony/user-bundle "~2.0@dev"
 ```
 $ php bin/console doctrine:schema:update --force
 ```
+* Crear usuario
+```
+$ php bin/console fos:user:create nombredeusuario correo@ejemplo.com miclave123
+```
+* Asignar perfil desarrollador
+```
+$ php bin/console fos:user:promote nombredeusuario ROLE_ADMIN
+```
