@@ -1,0 +1,79 @@
+{% extends "AdminBundle:layouts:body.html.twig" %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+
+		<div class="panel">
+
+			<div class="panel-heading">
+				<span class="panel-title">Agregar página</span>
+			</div>
+
+			<div class="panel-body">
+
+				<form id="form_agregar_pagina" class="form-horizontal" role="form" method="post" action="{{ url('admin_pagina_agregar_guardar') }}">
+					<input type="hidden" name="id" value="{{ pagina ? pagina.pagIdPk }}">
+					{% if pagina %}
+					<div class="form-group">
+						<label class="col-lg-3 control-label">ID</label>
+						<div class="col-lg-8">
+						  	<div>
+						    	<p class="form-control-static text-muted">{{ pagina.pagIdPk }}</p>
+						  	</div>
+						</div>
+					</div>
+					{% endif %}
+
+					<div class="form-group">
+						<label for="input_nombre" class="col-lg-3 control-label">Nombre*</label>
+						<div class="col-lg-8">
+						  	<div>
+						    	<input type="text" name="input_nombre" class="form-control" value="{{ pagina ? pagina.pagNombre }}">
+						  	</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="input_orden" class="col-lg-3 control-label">Orden</label>
+						<div class="col-lg-8">
+						  	<div>
+						    	<input type="number" name="input_orden" class="form-control" placeholder="Por defecto 0" value="{{ pagina ? pagina.pagOrden : 0 }}">
+						  	</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="input_controller" class="col-lg-3 control-label">Controller*</label>
+						<div class="col-lg-8">
+						  	<div>
+						    	<input type="text" name="input_controller" class="form-control" placeholder="Ej: InicioController" value="{{ pagina ? pagina.pagController }}">
+						  	</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label" for="txtarea_comentario">Comentario (Desarrollo)</label>
+						<div class="col-lg-8">
+						  	<div>
+						    	<textarea class="form-control textarea-grow" name="txtarea_comentario" rows="4">{{ pagina ? pagina.pagComentario }}</textarea>
+						  	</div>
+						</div>
+					</div>
+
+				  	<div class="col-lg-11 text-right">
+				    	<button type="submit" class="btn btn-hover btn-primary">Guardar</button>
+				  	</div>
+
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{{ absolute_url(asset('vendor/plugins/validate/jquery.validate.min.js')) }}"></script>
+	<script src="{{ absolute_url(asset('assets/js/cms/pagina.agregar.js')) }}"></script>
+{% endblock %}

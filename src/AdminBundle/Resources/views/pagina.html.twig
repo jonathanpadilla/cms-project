@@ -1,0 +1,29 @@
+{% extends "AdminBundle:layouts:body.html.twig" %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+
+		<div class="menu_opciones_top" style="margin-bottom: 20px;">
+			<div class="btn-group">
+			<!-- <div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Administrar <span class="caret"></span></button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#">Bloque</a></li>
+					<li><a href="#">Publicación</a></li>
+				</ul>
+			</div> -->
+			<button type="button" class="btn btn-primary">Administrar</button>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="col-md-12">
+
+		{{ bloques|raw }}
+
+	</div>
+
+</div>
+{% endblock %}

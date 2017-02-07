@@ -1,0 +1,81 @@
+<?php
+
+namespace AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CmsSeccion
+ *
+ * @ORM\Table(name="cms_seccion", indexes={@ORM\Index(name="sec_bloque_fk", columns={"sec_bloque_fk"}), @ORM\Index(name="sec_parent_fk", columns={"sec_parent_fk"})})
+ * @ORM\Entity
+ */
+class CmsSeccion
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sec_id_pk", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $secIdPk;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sec_nombre", type="string", length=100, nullable=true)
+     */
+    private $secNombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sec_texto", type="text", length=65535, nullable=true)
+     */
+    private $secTexto;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sec_orden", type="integer", nullable=true)
+     */
+    private $secOrden;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sec_tipo", type="integer", nullable=true)
+     */
+    private $secTipo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sec_eliminado", type="integer", nullable=true)
+     */
+    private $secEliminado;
+
+    /**
+     * @var \CmsBloque
+     *
+     * @ORM\ManyToOne(targetEntity="CmsBloque")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sec_bloque_fk", referencedColumnName="blo_id_pk")
+     * })
+     */
+    private $secBloqueFk;
+
+    /**
+     * @var \CmsSeccion
+     *
+     * @ORM\ManyToOne(targetEntity="CmsSeccion")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sec_parent_fk", referencedColumnName="sec_id_pk")
+     * })
+     */
+    private $secParentFk;
+
+
+}
+

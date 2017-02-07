@@ -1,0 +1,95 @@
+<?php
+
+namespace AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CmsBloque
+ *
+ * @ORM\Table(name="cms_bloque", indexes={@ORM\Index(name="blo_pagina_fk", columns={"blo_pagina_fk"}), @ORM\Index(name="blo_tipo_fk", columns={"blo_tipo_fk"})})
+ * @ORM\Entity
+ */
+class CmsBloque
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="blo_id_pk", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $bloIdPk;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="blo_nombre", type="string", length=100, nullable=true)
+     */
+    private $bloNombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="blo_controller", type="string", length=100, nullable=true)
+     */
+    private $bloController;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="blo_orden", type="integer", nullable=true)
+     */
+    private $bloOrden;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="blo_eliminado", type="integer", nullable=true)
+     */
+    private $bloEliminado;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="blo_visible", type="integer", nullable=true)
+     */
+    private $bloVisible;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="blo_fecha_registro", type="datetime", nullable=true)
+     */
+    private $bloFechaRegistro;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="blo_comentario", type="text", length=65535, nullable=true)
+     */
+    private $bloComentario;
+
+    /**
+     * @var \CmsPagina
+     *
+     * @ORM\ManyToOne(targetEntity="CmsPagina")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="blo_pagina_fk", referencedColumnName="pag_id_pk")
+     * })
+     */
+    private $bloPaginaFk;
+
+    /**
+     * @var \CmsBloqueTipo
+     *
+     * @ORM\ManyToOne(targetEntity="CmsBloqueTipo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="blo_tipo_fk", referencedColumnName="bti_id_pk")
+     * })
+     */
+    private $bloTipoFk;
+
+
+}
+

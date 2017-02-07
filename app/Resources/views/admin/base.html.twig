@@ -4,10 +4,10 @@
 <head lang="es">
   <!-- Meta, title, CSS, favicons, etc. -->
   <meta charset="utf-8">
-  <title>Tablero | CMS2</title>
-  <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
-  <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
-  <meta name="author" content="AdminDesigns">
+  <title>{{ default_data.header.title is defined ? default_data.header.title : 'Admin' }} | CMS2</title>
+  <meta name="keywords" content="{{ default_data.header.keywords is defined ? default_data.header.keywords : 'cms,admin' }}" />
+  <meta name="description" content="{{ default_data.header.description is defined ? default_data.header.description : 'Administrador de contenido' }}">
+  <meta name="author" content="{{ default_data.header.autor is defined ? default_data.header.autor }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Font CSS (Via CDN) -->
@@ -20,6 +20,9 @@
   <!-- Admin Forms CSS -->
   <link rel="stylesheet" type="text/css" href="{{ absolute_url(asset('assets/admin-tools/admin-forms/css/admin-forms.css')) }}">
 
+  {% block stylesheet %}
+  {% endblock %}
+
   <!-- Favicon -->
   <link rel="shortcut icon" href="{{ absolute_url(asset('assets/img/favicon.ico')) }}">
 
@@ -31,7 +34,7 @@
 
 </head>
 
-<body class="dashboard-page sb-l-o sb-r-c">
+<body class="{{ default_data.class_body is defined ? default_data.class_body }}">
 
   {% block body %}
   {% endblock %}
@@ -50,6 +53,10 @@
 
   <!-- Widget Javascript -->
   <script src="{{ absolute_url(asset('assets/js/demo/widgets.js')) }}"></script>
+
+  {% block script %}
+  {% endblock %}
+
   <script type="text/javascript">
   jQuery(document).ready(function() {
 

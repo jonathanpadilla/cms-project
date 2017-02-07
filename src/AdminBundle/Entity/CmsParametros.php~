@@ -1,0 +1,57 @@
+<?php
+
+namespace AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CmsParametros
+ *
+ * @ORM\Table(name="cms_parametros", indexes={@ORM\Index(name="par_pagina_fk", columns={"par_bloque_fk"})})
+ * @ORM\Entity
+ */
+class CmsParametros
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="par_id_pk", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $parIdPk;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="par_nombre", type="string", length=100, nullable=true)
+     */
+    private $parNombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="par_valor", type="text", length=65535, nullable=true)
+     */
+    private $parValor;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="par_visible", type="integer", nullable=true)
+     */
+    private $parVisible;
+
+    /**
+     * @var \CmsBloque
+     *
+     * @ORM\ManyToOne(targetEntity="CmsBloque")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="par_bloque_fk", referencedColumnName="blo_id_pk")
+     * })
+     */
+    private $parBloqueFk;
+
+
+}
+

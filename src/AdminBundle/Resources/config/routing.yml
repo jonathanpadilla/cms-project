@@ -1,3 +1,27 @@
 admin_tablero:
     path:     /
     defaults: { _controller: AdminBundle:Tablero:index }
+
+
+admin_pagina:
+    path:     /pagina/{id}
+    defaults: { _controller: AdminBundle:Pagina:index, id: 0 }
+    requirements:
+        id: '\d+'
+
+admin_pagina_agregar:
+    path:     /pagina/agregar/{id}
+    defaults: { _controller: AdminBundle:PaginaAgregar:index, id: 0 }
+    requirements:
+        id: '\d+'
+
+admin_pagina_agregar_guardar:
+    path:     /pagina/agregar/guardar
+    defaults: { _controller: AdminBundle:PaginaAgregar:guardar }
+    methods:  [POST]
+
+admin_pagina_eliminar:
+    path:     /pagina/eliminar/{id}
+    defaults: { _controller: AdminBundle:PaginaAgregar:eliminar, id: 0 }
+    requirements:
+        id: '\d+'

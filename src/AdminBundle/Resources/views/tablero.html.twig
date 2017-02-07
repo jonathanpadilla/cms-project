@@ -9,47 +9,31 @@
 
     <div class="row">
 
-      <div class="col-md-4">
-        <a href="pagina.html" class="url_item">
-          <div class="panel panel-tile text-success br-b bw5 br-success-light">
-            <div class="panel-body pl20 p5">
-              <i class="fa fa-file icon-bg"></i>
-              <h2 class="mt15 lh15">
-                <b>3</b>
-              </h2>
-              <h5 class="text-muted">INICIO <code>.InicioController</code></h5>
-            </div>
-          </div>
-        </a>
-      </div>
+      {% for pagina in paginas %}
 
       <div class="col-md-4">
-        <a href="pagina.html" class="url_item">
+        <a href="{{ url('admin_pagina', {'id':pagina.pagIdPk}) }}" class="url_item">
           <div class="panel panel-tile text-success br-b bw5 br-success-light">
             <div class="panel-body pl20 p5">
               <i class="fa fa-file icon-bg"></i>
-              <h2 class="mt15 lh15">
-                <b>3</b>
-              </h2>
-              <h5 class="text-muted">QUIENES SOMOS <code>.QuienesController</code></h5>
+              <h5 class="text-muted">{{ pagina.pagNombre }} <code>.{{ pagina.pagController }}</code></h5>
+              <div>
+                <small class="text-muted">{{ pagina.pagComentario ? pagina.pagComentario : '...' }}</small>
+                <br>
+                <a href="{{ url('admin_pagina_agregar', {'id': pagina.pagIdPk}) }}" class="text-success">Editar</a> <a href="{{ url('admin_pagina_eliminar', {'id': pagina.pagIdPk}) }}" class="text-danger btn_eliminar_pagina">Eliminar</a>
+              </div>
+              <!-- <h2 class="mt15 lh15">
+                <b>3</b> <small>Bloques</small>
+              </h2> -->
             </div>
           </div>
         </a>
       </div>
-
-      <div class="col-md-4">
-        <a href="pagina.html" class="url_item">
-          <div class="panel panel-tile text-success br-b bw5 br-success-light">
-            <div class="panel-body pl20 p5">
-              <i class="fa fa-file icon-bg"></i>
-              <h2 class="mt15 lh15">
-                <b>3</b>
-              </h2>
-              <h5 class="text-muted">CONTÁCTO <code>.ContactoController</code></h5>
-            </div>
-          </div>
-        </a>
+      {% else %}
+      <div class="col-md-12">
+        No hay páginas registradas. <a href="{{ url('admin_pagina_agregar') }}" style="color: #f5b025;">Agregar nueva página</a>
       </div>
+      {% endfor %}
 
     </div>
 
@@ -105,4 +89,8 @@
       </div>
 
     </div>
+{% endblock %}
+
+{% block script %}
+  <script src="{{ absolute_url(asset('assets/js/cms/tablero.js')) }}"></script>
 {% endblock %}

@@ -1,0 +1,78 @@
+<?php
+
+namespace AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CmsImagen
+ *
+ * @ORM\Table(name="cms_imagen", indexes={@ORM\Index(name="ima_seccion_fk", columns={"ima_seccion_fk"})})
+ * @ORM\Entity
+ */
+class CmsImagen
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ima_id_pk", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $imaIdPk;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ima_nombre", type="string", length=100, nullable=true)
+     */
+    private $imaNombre;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ima_alto", type="integer", nullable=true)
+     */
+    private $imaAlto;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ima_ancho", type="integer", nullable=true)
+     */
+    private $imaAncho;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ima_tamano_maximo", type="integer", nullable=true)
+     */
+    private $imaTamanoMaximo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ima_eliminado", type="integer", nullable=true)
+     */
+    private $imaEliminado;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="ima_fecha_registro", type="datetime", nullable=true)
+     */
+    private $imaFechaRegistro;
+
+    /**
+     * @var \CmsSeccion
+     *
+     * @ORM\ManyToOne(targetEntity="CmsSeccion")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ima_seccion_fk", referencedColumnName="sec_id_pk")
+     * })
+     */
+    private $imaSeccionFk;
+
+
+}
+

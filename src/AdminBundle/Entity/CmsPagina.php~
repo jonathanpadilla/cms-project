@@ -1,0 +1,68 @@
+<?php
+
+namespace AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CmsPagina
+ *
+ * @ORM\Table(name="cms_pagina")
+ * @ORM\Entity
+ */
+class CmsPagina
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pag_id_pk", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $pagIdPk;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pag_nombre", type="string", length=100, nullable=true)
+     */
+    private $pagNombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pag_controller", type="string", length=100, nullable=true)
+     */
+    private $pagController;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pag_orden", type="integer", nullable=true)
+     */
+    private $pagOrden;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pag_eliminado", type="integer", nullable=true)
+     */
+    private $pagEliminado;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="pag_fecha_registro", type="datetime", nullable=true)
+     */
+    private $pagFechaRegistro;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pag_comentario", type="text", length=65535, nullable=true)
+     */
+    private $pagComentario;
+
+
+}
+
