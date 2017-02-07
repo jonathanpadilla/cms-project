@@ -1,0 +1,31 @@
+.url_item{
+	text-decoration: none !important;
+}
+
+code{
+	font-size: 14px !important;
+	font-weight: normal !important;
+}
+
+.content_image .view_image{
+	border: 2px dashed #d9d9d9;
+    min-height: 100px;
+    text-align: center;
+}
+
+.btn_edit{
+	position: absolute;
+	right:14px;
+	margin-top: -7px;
+}
+
+.info_id_imagen{
+	position: absolute;
+    left: 25px;
+    top: 10px;
+    color: #777777;
+}
+
+.space-20{
+	height:20px;
+}

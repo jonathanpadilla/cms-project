@@ -65,11 +65,11 @@ class ModelBloque
 				$data->tipo 	= $seccion->getSecTipo();
 				$data->item 	= $this->buscarItem($seccion->getSecIdPk());
 
-				if(!$data->parent)
-				{
-					$sub = new ModelBloque();
-					$data->sub 		= $sub->getSeccion(null, $data->parent);
-				}
+				// if(!$data->parent)
+				// {
+				// 	$sub = new ModelBloque();
+				// 	$data->sub 		= $sub->getSeccion(null, $data->parent);
+				// }
 
 				$lista_seccion[] = $data;
 			}

@@ -74,3 +74,6 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
     user_class: AdminBundle\Entity\User
+    from_email:
+        address: jonathanpadilla09@outlook.com
+        sender_name: Jonathan
