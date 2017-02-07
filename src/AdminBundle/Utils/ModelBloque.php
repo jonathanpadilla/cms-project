@@ -2,6 +2,7 @@
 namespace AdminBundle\Utils;
 
 use Doctrine\ORM\EntityManager;
+use AdminBundle\Utils\ModelBloque;
 use \stdClass;
  
 class ModelBloque
@@ -46,32 +47,36 @@ class ModelBloque
     	return false;
 	}
 
-	public function getSeccion($bloque)
+	public function getSeccion($bloque = null, $parent = null)
 	{
-		if($bloque)
+
+		$lista_seccion = [];
+		if($secciones = $this->em->getRepository('AdminBundle:CmsSeccion')->findBy(['secBloqueFk' => $bloque, 'secParentFk' => $parent, 'secEliminado' => null], ['secOrden' => 'ASC']))
 		{
-			$lista_seccion = [];
-			if($secciones = $this->em->getRepository('AdminBundle:CmsSeccion')->findBy(['secBloqueFk' => $bloque, 'secEliminado' => null], ['secOrden' => 'ASC']))
+			foreach($secciones as $seccion )
 			{
-				foreach($secciones as $seccion )
+				$data = new stdClass();
+
+				$data->id 		= $seccion->getSecIdPk();
+				$data->parent	= ($seccion->getSecParentFk()) ? $seccion->getSecParentFk()->getSecIdPk(): null;
+				$data->nombre 	= $seccion->getSecNombre();
+				$data->texto 	= $seccion->getSecTexto();
+				$data->orden 	= $seccion->getSecOrden();
+				$data->tipo 	= $seccion->getSecTipo();
+				$data->item 	= $this->buscarItem($seccion->getSecIdPk());
+
+				if(!$data->parent)
 				{
-					$data = new stdClass();
-
-					$data->id 		= $seccion->getSecIdPk();
-					$data->nombre 	= $seccion->getSecNombre();
-					$data->texto 	= $seccion->getSecTexto();
-					$data->orden 	= $seccion->getSecOrden();
-					$data->tipo 	= $seccion->getSecTipo();
-					$data->item 	= $this->buscarItem($seccion->getSecIdPk());
-
-					$lista_seccion[] = $data;
+					$sub = new ModelBloque();
+					$data->sub 		= $sub->getSeccion(null, $data->parent);
 				}
-			}
 
-			return $lista_seccion;
+				$lista_seccion[] = $data;
+			}
 		}
 
-		return false;
+		return $lista_seccion;
+
 	}
 
 	private function buscarItem($seccion)

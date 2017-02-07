@@ -1,191 +1,71 @@
 {% for bloque in bloques %}
-<div class="panel">
-	<div class="panel-heading">
-		<span class="panel-icon">
-		  	<i class="fa fa-list"></i>
-		</span>
-		<span class="panel-title">{{ bloque.tipo_nombre }} <code>.bloque1(pendiente)</code></span>
-	</div>
-	<div class="panel-body">
 
-    {% for seccion in bloque.secciones %}
+  {% if bloque.tipo_id == 1 %}
+  <div class="panel">
+  	<div class="panel-heading">
+  		<span class="panel-icon">
+  		  	<i class="fa fa-list"></i>
+  		</span>
+  		<span class="panel-title">{{ bloque.tipo_nombre }} <code>.bloque1(pendiente)</code></span>
+  	</div>
+  	<div class="panel-body">
 
-      {% if seccion.item.texto is defined %}
-      <div>
-        <div class="btn_edit">
-          <a href="#" class="btn btn-success"> <i class="fa fa-edit"></i> Editar</a>
+      {% for seccion in bloque.secciones %}
+
+        {% if seccion.item.texto is defined %}
+        <div>
+          <div class="btn_edit">
+            <a href="#" class="btn btn-success"> <i class="fa fa-edit"></i> Editar</a>
+          </div>
+          <code>.titulo1 (pendiente)</code>
+          {% if seccion.item.texto.texTipo == 1 %}
+            <h1 class="mtn">{{ seccion.item.texto.texTexto ? seccion.item.texto.texTexto : '...' }}</h1>
+          {% else %}
+            <p>{{ seccion.item.texto.texTexto ? seccion.item.texto.texTexto : '...' }}</p>
+          {% endif %}
         </div>
-        <code>.titulo1 (pendiente)</code>
-        {% if seccion.item.texto.texTipo == 1 %}
-          <h1 class="mtn">{{ seccion.item.texto.texTexto ? seccion.item.texto.texTexto : '...' }}</h1>
-        {% else %}
-          <p>{{ seccion.item.texto.texTexto ? seccion.item.texto.texTexto : '...' }}</p>
+        <hr class="alt short">
         {% endif %}
-      </div>
-      <hr class="alt short">
-      {% endif %}
 
-      {% if seccion.item.imagen is defined %}
-      <div class="content_image">
-        <code>.imagen1 (pendiente)</code>
-        <div class="view_image">
-          <div>
-              <img src="assets/img/default-image.jpg" alt="">
+        {% if seccion.item.imagen is defined %}
+        <div class="content_image">
+          <code>.imagen1 (pendiente)</code>
+          <div class="view_image">
+            <div>
+                <img src="assets/img/default-image.jpg" alt="">
+            </div>
           </div>
         </div>
+        {% endif %}
+
+      {% endfor %}
+
+
+  	</div>
+  </div>
+  {% endif %}
+
+  {% if bloque.tipo_id == 2 %}
+    <div class="panel">
+      <div class="panel-heading">
+        <span class="panel-icon">
+          <i class="fa fa-list"></i>
+        </span>
+        <span class="panel-title">Publicacion <code>.Noticias1</code></span>
       </div>
-      {% endif %}
+      <div class="panel-body">
 
-    {% endfor %}
+        <div class="row">
+          <div class="col-md-12">
+            <h1>{{ bloque.nombre }}</h1>
+          </div>
+          <div class="col-lg-12">
+            <a href="#" class="btn btn-hover btn-primary">Administrar</a>
+          </div>
+        </div>
 
+      </div>
+    </div>
+  {% endif %}
 
-	</div>
-</div>
 {% endfor %}
-
-<!-- <div class="panel">
-  <div class="panel-heading">
-    <span class="panel-icon">
-      <i class="fa fa-list"></i>
-    </span>
-    <span class="panel-title">Bloque 1 <code>.bloque1</code></span>
-  </div>
-  <div class="panel-body">
-
-    <div>
-      <div class="btn_edit">
-        <a href="#" class="btn btn-success"> <i class="fa fa-edit"></i> Editar</a>
-      </div>
-      <code>.titulo1</code>
-      <h1 class="mtn">Bienvenidos a mi página
-      </h1>
-    </div>
-
-    <hr class="alt short">
-    
-    <div>
-      <div class="btn_edit">
-        <a href="#" class="btn btn-success"> <i class="fa fa-edit"></i> Editar</a>
-      </div>
-      <code>.texto1</code>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-    
-    <hr class="alt short">
-
-    <div class="content_image">
-      <code>.imagen1</code>
-      <div class="view_image">
-        <div>
-          <img src="assets/img/default-image.jpg" alt="">
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="panel">
-  <div class="panel-heading">
-    <span class="panel-icon">
-      <i class="fa fa-list"></i>
-    </span>
-    <span class="panel-title">Bloque 1 <code>.bloque1</code></span>
-  </div>
-  <div class="panel-body">
-
-    <div>
-      <div class="btn_edit">
-        <a href="#" class="btn btn-success"> <i class="fa fa-edit"></i> Editar</a>
-      </div>
-      <code>.titulo1</code>
-      <h1 class="mtn">Bienvenidos a mi página
-      </h1>
-    </div>
-
-    <hr class="alt short">
-    
-    <div>
-      <div class="btn_edit">
-        <a href="#" class="btn btn-success"> <i class="fa fa-edit"></i> Editar</a>
-      </div>
-      <code>.texto1</code>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-    
-    <hr class="alt short">
-
-    <div class="content_image">
-      <code>.imagen1</code>
-      <div class="view_image">
-        <div>
-          <img src="assets/img/default-image.jpg" alt="">
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="panel">
-  <div class="panel-heading">
-    <span class="panel-icon">
-      <i class="fa fa-list"></i>
-    </span>
-    <span class="panel-title">Publicacion Noticias <code>.Noticias1</code></span>
-  </div>
-  <div class="panel-body">
-
-    <div class="row">
-      <div class="col-md-12">
-        <h1>Publicación: Noticias</h1>
-      </div>
-      <div class="col-lg-12">
-        <button type="button" class="btn btn-hover btn-primary">Administrar</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="panel">
-  <div class="panel-heading">
-    <span class="panel-icon">
-      <i class="fa fa-list"></i>
-    </span>
-    <span class="panel-title">Bloque 1 <code>.bloque1</code></span>
-  </div>
-  <div class="panel-body">
-
-    <div>
-      <div class="btn_edit">
-        <a href="#" class="btn btn-success"> <i class="fa fa-edit"></i> Editar</a>
-      </div>
-      <code>.titulo1</code>
-      <h1 class="mtn">Bienvenidos a mi página
-      </h1>
-    </div>
-
-    <hr class="alt short">
-    
-    <div>
-      <div class="btn_edit">
-        <a href="#" class="btn btn-success"> <i class="fa fa-edit"></i> Editar</a>
-      </div>
-      <code>.texto1</code>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-    
-    <hr class="alt short">
-
-    <div class="content_image">
-      <code>.imagen1</code>
-      <div class="view_image">
-        <div>
-          <img src="assets/img/default-image.jpg" alt="">
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div> -->
