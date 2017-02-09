@@ -50,7 +50,7 @@
           {% if seccion.item.texto.texTipo == 1 %}
             <h1 class="mtn">{{ seccion.item.texto.texTexto ? seccion.item.texto.texTexto : '...' }}</h1>
           {% else %}
-            <p>{{ seccion.item.texto.texTexto ? seccion.item.texto.texTexto : '...' }}</p>
+            <p style="font-size: 16px;">{{ seccion.item.texto.texTexto ? seccion.item.texto.texTexto : '...' }}</p>
           {% endif %}
         </div>
         <hr class="alt short">
@@ -68,7 +68,6 @@
         {% endif %}
 
       {% endfor %}
-
 
   	</div>
   </div>
