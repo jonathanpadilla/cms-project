@@ -1,0 +1,48 @@
+{% extends "AdminBundle:layouts:body.html.twig" %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+
+    <div class="menu_opciones_top" style="margin-bottom: 20px;">
+      <div class="btn-group">
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          Agregar bloque <span class="caret"></span></button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{{ url('admin_pagina_bloques_agregar') }}?tipo=1&pagina={{ pagina.pagIdPk }}">Básico</a></li>
+            <li><a href="#" class="btn_agregar_bloque" data-tipo="2" data-pagina="{{ pagina.pagIdPk }}">Publicación</a></li>
+            <li><a href="#" class="btn_agregar_bloque">Categoría</a></li>
+            <li><a href="#" class="btn_agregar_bloque">Grupo Parámetros</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+	<div class="col-md-12">
+    
+    <div class="form-horizontal">
+		  {{ bloques|raw }}
+    </div>
+		
+	</div>
+
+</div>
+{% endblock %}
+
+{% block modal %}
+<div class="modal fade" id="modal_nuevo_bloque" tabindex="-1" role="dialog" aria-labelledby="modal_nuevo_bloqueLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div id="nuevo_bloque_content" class="modal-content">
+      
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{{ absolute_url(asset('vendor/plugins/validate/jquery.validate.min.js')) }}"></script>
+	<script src="{{ absolute_url(asset('assets/js/cms/pagina.bloques.js')) }}"></script>
+{% endblock %}

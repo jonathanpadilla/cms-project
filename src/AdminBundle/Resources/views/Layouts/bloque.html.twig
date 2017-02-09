@@ -1,4 +1,33 @@
 {% for bloque in bloques %}
+  
+  {% if bloque.tipo_id == 4 %}
+    <div class="panel">
+      <div class="panel-heading">
+        <span class="panel-icon">
+          <i class="fa fa-list"></i>
+        </span>
+        <span class="panel-title">{{ bloque.tipo_nombre }} <code>.parametro1 (pendiente)</code></span>
+      </div>
+      <div class="panel-body">
+
+        <div class="row">
+          <div class="form-horizontal">
+            {% for parametro in bloque.parametros %}
+            <div class="form-group">
+              <label for="input_nombre" class="col-lg-2 control-label">{{ parametro.nombre }}</label>
+              <div class="col-lg-5">
+                  <div>
+                    <input type="text" name="input_nombre" class="form-control" value="{{ parametro.valor }}">
+                  </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  {% endif %}
 
   {% if bloque.tipo_id == 1 %}
   <div class="panel">
@@ -32,7 +61,7 @@
           <code>.imagen1 (pendiente)</code>
           <div class="view_image">
             <div>
-                <img src="assets/img/default-image.jpg" alt="">
+                <img style="max-height: 300px;" src="{{ absolute_url(asset('assets/img/default-image.png')) }}" alt="">
             </div>
           </div>
         </div>
@@ -51,7 +80,7 @@
         <span class="panel-icon">
           <i class="fa fa-list"></i>
         </span>
-        <span class="panel-title">Publicacion <code>.Noticias1</code></span>
+        <span class="panel-title">{{ bloque.tipo_nombre }} <code>.Noticias1 (pendiente)</code></span>
       </div>
       <div class="panel-body">
 

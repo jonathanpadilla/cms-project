@@ -20,6 +20,24 @@ admin_pagina_agregar_guardar:
     defaults: { _controller: AdminBundle:PaginaAgregar:guardar }
     methods:  [POST]
 
+admin_pagina_bloques:
+    path:     /pagina/bloques/{id}
+    defaults: { _controller: AdminBundle:PaginaBloques:index, id: 0 }
+    requirements:
+        id: '\d+'
+
+admin_pagina_bloques_agregar:
+    path:     /pagina/bloques/agregar
+    defaults: { _controller: AdminBundle:PaginaBloques:agregarBloque }
+    methods:  [POST, GET]
+
+admin_pagina_bloques_agregar_cargar_form:
+    path:     /pagina/bloques/agregar/cargar-form
+    defaults: { _controller: AdminBundle:PaginaBloques:cargarForm }
+    methods:  [POST]
+    options:
+        expose: true
+
 admin_pagina_eliminar:
     path:     /pagina/eliminar/{id}
     defaults: { _controller: AdminBundle:PaginaAgregar:eliminar, id: 0 }

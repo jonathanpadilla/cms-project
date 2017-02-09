@@ -1,0 +1,385 @@
+{% for bloque in bloques %}
+
+{% if bloque.tipo_id == 4 %}
+<div class="panel">
+  <div class="panel-heading">
+    <span class="panel-title">{{ bloque.tipo_nombre }}</span>
+  </div>
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="menu_opciones_top" style="margin-bottom: 20px;">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary">Agregar parametro</button>
+            <button type="button" class="btn btn-danger">Eliminar</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    {% for parametro in bloque.parametros %}
+
+	<div class="row">
+      <div class="col-md-3 text-right">
+        <label class="control-label">{{ parametro.nombre }}</label>
+      </div>
+      <div class="col-lg-7">
+        <div>
+          <input type="text" class="form-control" value="{{ parametro|json_encode() }}">
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-success">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="space-20"></div>
+
+    {% endfor %}
+
+
+  </div>
+</div>
+{% endif %}
+
+{% if bloque.tipo_id == 1 %}
+<div class="panel">
+  <div class="panel-heading">
+    <span class="panel-title">{{ bloque.tipo_nombre }}</span>
+  </div>
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="menu_opciones_top" style="margin-bottom: 20px;">
+          <div class="btn-group">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              Agregar texto <span class="caret"></span></button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Titulo</a></li>
+                <li><a href="#">Párrafo</a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-primary">Agregar imagen</button>
+            <button type="button" class="btn btn-danger">Eliminar bloque</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    {% for seccion in bloque.secciones %}
+
+    {% if seccion.item.texto is defined %}
+    <div class="row">
+      <div class="col-md-3 text-right">
+      	{% if seccion.item.texto.texTipo == 1 %}
+        <label class="control-label">TEXTO</label>
+        {% endif %}
+        {% if seccion.item.texto.texTipo == 2 %}
+        <label class="control-label">PARRAFO</label>
+        {% endif %}
+      </div>
+      <div class="col-lg-7">
+        <div>
+        	{% if seccion.item.texto.texTipo == 1 %}
+          	<input type="text"  class="form-control" value="{'id':{{ seccion.item.texto.texIdPk }}, 'texMax': {{ seccion.item.texto.texMax }}, 'texMin': {{ seccion.item.texto.texMax }}, 'texTexto': {{ seccion.item.texto.texTexto }}, 'texTipo': {{ seccion.item.texto.texTipo }} }">
+        	{% endif %}
+        	{% if seccion.item.texto.texTipo == 2 %}
+          	<textarea class="form-control" rows="3">{'texIdPk':{{ seccion.item.texto.texIdPk }}, 'texMax': {{ seccion.item.texto.texMax }}, 'texMin': {{ seccion.item.texto.texMax }}, 'texTexto': {{ seccion.item.texto.texTexto }}, 'texTipo': {{ seccion.item.texto.texTipo }} }</textarea>
+        	{% endif %}
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-success">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+	
+	{% if seccion.item.imagen is defined %}
+		<div class="row">
+	      <div class="col-lg-3 text-right">
+	        <label for="">IMAGEN</label>
+	      </div>
+	      <div class="col-lg-7">
+	        <div class="content_image">
+	          <div class="view_image">
+	            <div class="info_id_imagen">
+	              {'imaIdPk':{{ seccion.item.imagen.imaIdPk }}, 'imaNombre': {{ seccion.item.imagen.imaNombre }},'accept': 'file_extension|audio/*|video/*|image/*|media_type', 'imaTamanoMaximo: {{ seccion.item.imagen.imaTamanoMaximo }}}
+	            </div>
+	            <div style="margin-top: 30px;">
+	              <img style="width: 160px;" src="{{ absolute_url(asset('assets/img/default-image.png')) }}" alt="">
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="col-lg-2">
+	        <div class="btn-group">
+	          <button type="button" class="btn btn-success">
+	            <i class="fa fa-edit"></i>
+	          </button>
+	          <button type="button" class="btn btn-danger">
+	            <i class="fa fa-trash-o"></i>
+	          </button>
+	        </div>
+	      </div>
+
+	    </div>
+	{% endif %}
+
+    <div class="space-20"></div>
+    {% endfor %}
+
+  </div>
+</div>
+{% endif %}
+
+{% if bloque.tipo_id == 2 %}
+<div class="panel">
+  <div class="panel-heading">
+    <span class="panel-title">{{ bloque.tipo_nombre }}</span>
+  </div>
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="menu_opciones_top" style="margin-bottom: 20px;">
+          <div class="btn-group">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              Agregar texto <span class="caret"></span></button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Titulo</a></li>
+                <li><a href="#">Párrafo</a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-primary">Agregar imagen</button>
+            <button type="button" class="btn btn-danger">Eliminar bloque</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endif %}
+
+{% endfor %}
+
+<!-- <div class="panel">
+  <div class="panel-heading">
+    <span class="panel-title">BLOQUE NORMAL</span>
+  </div>
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="menu_opciones_top" style="margin-bottom: 20px;">
+          <div class="btn-group">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              Agregar texto <span class="caret"></span></button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Titulo</a></li>
+                <li><a href="#">Párrafo</a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-primary">Agregar imagen</button>
+            <button type="button" class="btn btn-danger">Eliminar bloque</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3 text-right">
+        <label class="control-label">ID-BLOQUE</label>
+      </div>
+      <div class="col-lg-8">
+        <div>
+          <p class="text-muted">3</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-20"></div>
+
+    <div class="row">
+      <div class="col-md-3 text-right">
+        <label class="control-label">TITULO</label>
+      </div>
+      <div class="col-lg-7">
+        <div>
+          <input type="text" id="input_nombre" class="form-control" value="{'id':'3', 'max-lenght': '100', 'min-lenght': '10'}">
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-success">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-20"></div>
+
+    <div class="row">
+      <div class="col-md-3 text-right">
+        <label class="control-label">PÁRRAFO</label>
+      </div>
+      <div class="col-lg-7">
+        <div>
+          <textarea class="form-control" id="txtarea_comentario" rows="4">{'id':'3', 'max-lenght': null, 'min-lenght': '10'}</textarea>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-success">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-20"></div>
+
+    <div class="row">
+      <div class="col-lg-3 text-right">
+        <label for="">IMAGEN</label>
+      </div>
+      <div class="col-lg-7">
+        <div class="content_image">
+          <div class="view_image">
+            <div class="info_id_imagen">
+              {'id':'3', 'accept': 'file_extension|audio/*|video/*|image/*|media_type', 'max-size': '1024MB'}
+            </div>
+            <div>
+              <img src="assets/img/default-image.jpg" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-success">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-heading">
+    <span class="panel-title">BLOQUE PARÁMETROS NOMBRE</span>
+  </div>
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="menu_opciones_top" style="margin-bottom: 20px;">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary">Agregar parametro</button>
+            <button type="button" class="btn btn-danger">Eliminar</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3 text-right">
+        <label class="control-label">ID-BLOQUE</label>
+      </div>
+      <div class="col-lg-8">
+        <div>
+          <p class="text-muted">3</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-20"></div>
+
+    <div class="row">
+      <div class="col-md-3 text-right">
+        <label class="control-label">Correo</label>
+      </div>
+      <div class="col-lg-7">
+        <div>
+          <input type="text" id="input_nombre" class="form-control" value="{'id':'3', 'name': 'correo'}">
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-success">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-20"></div>
+
+    <div class="row">
+      <div class="col-md-3 text-right">
+        <label class="control-label">Copia a cliente</label>
+      </div>
+      <div class="col-lg-7">
+        <div class="checkbox-custom checkbox-primary mb5">
+          <input type="checkbox" checked="" id="checkboxExample4">
+          <label for="checkboxExample4">{'id':'3', 'name': 'copia-cliente'}</label>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-success">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div> -->

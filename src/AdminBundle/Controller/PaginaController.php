@@ -15,13 +15,12 @@ class PaginaController extends Controller
     		$default_data = $this->get('DefaultData');
     		$default_data->setHeaderTitle('');
     		$model_bloque = $this->get('ModelBloque');
-
-    		// dump($model_bloque->getAll($id));exit;
     		
     		$bloques = $this->renderView('AdminBundle:Layouts:bloque.html.twig', ['bloques' => $model_bloque->getAll($id)]);
 
     		return $this->render('AdminBundle::pagina.html.twig', [
     			'bloques'		=> $bloques,
+                'id_pagina'     => $id,
 	        	'default_data' 	=> $default_data->getAll()
         	]);
     	}

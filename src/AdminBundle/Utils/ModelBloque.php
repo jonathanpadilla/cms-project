@@ -2,16 +2,17 @@
 namespace AdminBundle\Utils;
 
 use Doctrine\ORM\EntityManager;
-use AdminBundle\Utils\ModelBloque;
 use \stdClass;
  
 class ModelBloque
 {
 	private $em;
+	private $recursiveBodelBloque;
 
 	public function __construct(EntityManager $entityManager)
     {
     	$this->em = $entityManager;
+    	// $this->recursiveBodelBloque = $recursiveBodelBloque;
     }
 
 	public function getAll($pagina)
@@ -34,11 +35,24 @@ class ModelBloque
     				$data->comentario	= $bloque->getBloComentario();
     				$data->tipo_id 		= $bloque->getBloTipoFk()->getBtiIdPk();
     				$data->tipo_nombre	= $bloque->getBloTipoFk()->getBtiNombre();
-    				$data->secciones 	= $this->getSeccion($bloque->getBloIdPk());
+
+    				if($data->tipo_id == 1)
+    				{
+    					$data->secciones = $this->getSeccion($bloque->getBloIdPk(), null);
+
+    				}elseif($data->tipo_id == 2)
+    				{
+    					$data->secciones = $this->getSeccion($bloque->getBloIdPk(), null, 1);
+
+    				}elseif($data->tipo_id == 4){
+    					$data->parametros = $this->getParametros($bloque->getBloIdPk());
+    				}
 
     				$lista_bloques[] = $data;
     			}
     		}
+
+    		dump($lista_bloques);
 
     		return $lista_bloques;
 
@@ -47,11 +61,31 @@ class ModelBloque
     	return false;
 	}
 
-	public function getSeccion($bloque = null, $parent = null)
+	private function getParametros($bloque)
+	{
+		$lista_parametros = [];
+		if($parametros = $this->em->getRepository('AdminBundle:CmsParametros')->findBy(['parBloqueFk' => $bloque]))
+		{
+			foreach ($parametros as $parametro) {
+				$data = new stdClass();
+
+				$data->id 		= $parametro->getParIdPk();
+				$data->nombre 	= $parametro->getParNombre();
+				$data->valor 	= $parametro->getParValor();
+				$data->visible 	= $parametro->getParVisible();
+
+				$lista_parametros[] = $data;
+			}
+		}
+
+		return $lista_parametros;
+	}
+
+	public function getSeccion($bloque = null, $parent = null, $tipo = null)
 	{
 
 		$lista_seccion = [];
-		if($secciones = $this->em->getRepository('AdminBundle:CmsSeccion')->findBy(['secBloqueFk' => $bloque, 'secParentFk' => $parent, 'secEliminado' => null], ['secOrden' => 'ASC']))
+		if($secciones = $this->em->getRepository('AdminBundle:CmsSeccion')->findBy(['secBloqueFk' => $bloque, 'secParentFk' => $parent, 'secTipo' => $tipo, 'secEliminado' => null], ['secOrden' => 'ASC']))
 		{
 			foreach($secciones as $seccion )
 			{
@@ -65,11 +99,12 @@ class ModelBloque
 				$data->tipo 	= $seccion->getSecTipo();
 				$data->item 	= $this->buscarItem($seccion->getSecIdPk());
 
-				// if(!$data->parent)
-				// {
-				// 	$sub = new ModelBloque();
-				// 	$data->sub 		= $sub->getSeccion(null, $data->parent);
-				// }
+				if(!$data->parent)
+				{
+					$data->sub = $this->getSeccion($bloque, $data->id, 2);
+				}else{
+					$data->sub = null;
+				}
 
 				$lista_seccion[] = $data;
 			}
@@ -95,7 +130,7 @@ class ModelBloque
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 	public function getTexto($seccion)
@@ -108,7 +143,7 @@ class ModelBloque
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 	public function getImagen($seccion)
