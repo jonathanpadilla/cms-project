@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Editar texto</h4>
+</div>
+<div class="modal-body">
+	<div class="row">
+	  <div class="col-md-12">
+	    <form id="form_editar_texto" action="{{ url('admin_pagina_guardar_item') }}" method="post" class="form-horizontal">
+	    	<input type="hidden" name="id" value="{{ id }}">
+			<div class="form-group">
+				<label for="nombre" class="col-lg-3 control-label">{{ tipo == 1 ? 'Texto' : 'Parrafo' }}</label>
+				<div class="col-lg-8">
+				  	<div>
+				  		{% if tipo == 1 %}
+				  		<input type="text" name="texto" class="form-control" value="{{ value }}">
+				  		{% else %}
+				  		<textarea name="texto" class="form-control" id="" cols="30" rows="10">{{ value }}</textarea>
+				  		{% endif %}
+				  	</div>
+				</div>
+			</div>
+		</form>
+	  </div>
+	</div>
+	</div>
+	<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	<button type="submit" form="form_editar_texto" class="btn btn-primary">Guardar</button>
+</div>

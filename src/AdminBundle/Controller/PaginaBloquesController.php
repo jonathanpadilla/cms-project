@@ -28,7 +28,7 @@ class PaginaBloquesController extends Controller
             $pagina = $em->getRepository('AdminBundle:CmsPagina')->findOneBy(['pagIdPk' => $id]);
         }
 
-        $bloques = $this->renderView('AdminBundle:Layouts:bloque_admin.html.twig', ['bloques' => $model_bloque->getAll($id)]);
+        $bloques = $this->renderView('AdminBundle:Bloques:bloque_admin.html.twig', ['bloques' => $model_bloque->getAll($id)]);
 
         return $this->render('AdminBundle::pagina_bloques.html.twig', [
             'pagina'        => $pagina,
@@ -89,7 +89,7 @@ class PaginaBloquesController extends Controller
 
             switch($tipo)
             {
-                case 2:$html = $this->renderView('AdminBundle:Layouts:form_bloque_publicacion.html.twig', ['pagina' => $pagina]);
+                case 2:$html = $this->renderView('AdminBundle:Bloques:form_bloque_publicacion.html.twig', ['pagina' => $pagina]);
                     break;
             }
         }

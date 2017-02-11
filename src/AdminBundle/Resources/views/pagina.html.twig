@@ -27,3 +27,18 @@
 
 </div>
 {% endblock %}
+
+{% block modal %}
+<div class="modal fade" id="modal_pagina" tabindex="-1" role="dialog" aria-labelledby="modal_paginaLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div id="modal_content" class="modal-content">
+      
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{{ absolute_url(asset('vendor/plugins/validate/jquery.validate.min.js')) }}"></script>
+	<script src="{{ absolute_url(asset('assets/js/cms/pagina.js')) }}"></script>
+{% endblock %}

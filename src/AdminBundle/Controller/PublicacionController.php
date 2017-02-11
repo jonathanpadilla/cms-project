@@ -28,7 +28,7 @@ class PublicacionController extends Controller
             $pagina = $em->getRepository('AdminBundle:CmsPagina')->findOneBy(['pagIdPk' => $id]);
         }
 
-        $bloques = $this->renderView('AdminBundle:Layouts:bloque_admin.html.twig', ['bloques' => $model_bloque->getAll($id)]);
+        $bloques = $this->renderView('AdminBundle:Bloques:bloque_admin.html.twig', ['bloques' => $model_bloque->getAll($id)]);
 
         return $this->render('AdminBundle::pagina_bloques.html.twig', [
             'pagina'        => $pagina,

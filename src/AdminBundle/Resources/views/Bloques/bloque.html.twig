@@ -44,7 +44,7 @@
         {% if seccion.item.texto is defined %}
         <div>
           <div class="btn_edit">
-            <a href="#" class="btn btn-success"> <i class="fa fa-edit"></i> Editar</a>
+            <a href="#" class="btn btn-success btn_editar" data-id="{{ seccion.item.texto.texIdPk }}" data-tipo="{{ seccion.item.texto.texTipo }}" data-value="{{ seccion.item.texto.texTexto }}"> <i class="fa fa-edit"></i> Editar</a>
           </div>
           <code>.titulo1 (pendiente)</code>
           {% if seccion.item.texto.texTipo == 1 %}

@@ -15,6 +15,18 @@ admin_pagina_agregar:
     requirements:
         id: '\d+'
 
+admin_pagina_editar_item:
+    path:     /pagina/editar-item/
+    defaults: { _controller: AdminBundle:Pagina:editarItem }
+    methods: [POST]
+    options:
+        expose: true
+
+admin_pagina_guardar_item:
+    path:     /pagina/guardar-item/
+    defaults: { _controller: AdminBundle:Pagina:guardarItem }
+    methods: [POST]
+
 admin_pagina_agregar_guardar:
     path:     /pagina/agregar/guardar
     defaults: { _controller: AdminBundle:PaginaAgregar:guardar }
