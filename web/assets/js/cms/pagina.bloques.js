@@ -1,7 +1,8 @@
 'use strict'
 
-var btn_agregar_bloque = $(".btn_agregar_bloque");
-var modal_nuevo_bloque = $("#modal_nuevo_bloque");
+var btn_agregar_bloque 	= $(".btn_agregar_bloque");
+var modal_nuevo_bloque 	= $("#modal_nuevo_bloque");
+var btn_agregar_texto 	= $(".btn_agregar_texto");
 
 $(function(){
 
@@ -23,4 +24,30 @@ $(function(){
 			}
 		});
 	});
+
+	btn_agregar_texto.on('click', function(e){
+		e.preventDefault();
+
+		var btn = $(this);
+		var data = {'tipo': btn.data('tipo'), 'bloque': btn.data('bloque')};
+
+		if($(this).attr('data-min') && $(this).attr('data-max') && $(this).attr('data-id'))
+		{
+			data.min 	= btn.data('min');
+			data.max 	= btn.data('max');
+			data.id 	= btn.data('id');
+		}
+
+		$.ajax({
+			url: Routing.generate('admin_pagina_bloques_agregar_texto'),
+			data: data,
+			method: 'post',
+			dataType: 'html'
+		}).done(function(html){
+			$("#nuevo_bloque_content").html(html);
+			modal_nuevo_bloque.modal('show');
+		});
+
+	});
+
 });

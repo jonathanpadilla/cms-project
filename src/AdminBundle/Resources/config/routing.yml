@@ -50,6 +50,18 @@ admin_pagina_bloques_agregar_cargar_form:
     options:
         expose: true
 
+admin_pagina_bloques_agregar_texto:
+    path:     /pagina/bloques/agregar/texto
+    defaults: { _controller: AdminBundle:PaginaBloques:agregarTexto }
+    methods:  [POST]
+    options:
+        expose: true
+
+admin_pagina_bloques_guardar_texto:
+    path:     /pagina/bloques/guardar/texto
+    defaults: { _controller: AdminBundle:PaginaBloques:guardarTexto }
+    methods:  [POST]
+
 admin_pagina_eliminar:
     path:     /pagina/eliminar/{id}
     defaults: { _controller: AdminBundle:PaginaAgregar:eliminar, id: 0 }

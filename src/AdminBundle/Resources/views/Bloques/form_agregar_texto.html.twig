@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Agregar {{ tipo == 1 ? 'titulo': 'párrafo' }}</h4>
+</div>
+<div class="modal-body">
+	<div class="row">
+	  <div class="col-md-12">
+	    <form id="form_agregar_texto" action="{{ url('admin_pagina_bloques_guardar_texto') }}" method="post" class="form-horizontal">
+	    	<input type="hidden" name="tipo" value="{{ tipo }}">
+	    	<input type="hidden" name="bloque" value="{{ bloque }}">
+	    	<input type="hidden" name="id" value="{{ id }}">
+			<div class="form-group">
+				<label for="max" class="col-lg-3 control-label">Maximo</label>
+				<div class="col-lg-4">
+				  	<div>
+				    	<input type="number" name="max" class="form-control" value="{{ max }}">
+				  	</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="min" class="col-lg-3 control-label">Minimo</label>
+				<div class="col-lg-4">
+				  	<div>
+				    	<input type="number" name="min" class="form-control" value="{{ min }}">
+				  	</div>
+				</div>
+			</div>
+		</form>
+	  </div>
+	</div>
+	</div>
+	<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	<button type="submit" form="form_agregar_texto" class="btn btn-primary">Agregar</button>
+</div>

@@ -64,11 +64,10 @@
         <div class="menu_opciones_top" style="margin-bottom: 20px;">
           <div class="btn-group">
             <div class="btn-group">
-              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-              Agregar texto <span class="caret"></span></button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Agregar texto <span class="caret"></span></button>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Titulo</a></li>
-                <li><a href="#">Párrafo</a></li>
+                <li><a href="#" class="btn_agregar_texto" data-tipo="1" data-bloque="{{ bloque.id }}" data-id="0">Titulo</a></li>
+                <li><a href="#" class="btn_agregar_texto" data-tipo="2" data-bloque="{{ bloque.id }}" data-id="0">Párrafo</a></li>
               </ul>
             </div>
             <button type="button" class="btn btn-primary">Agregar imagen</button>
@@ -94,7 +93,7 @@
       <div class="col-lg-7">
         <div>
         	{% if seccion.item.texto.texTipo == 1 %}
-          	<input type="text"  class="form-control" value="{'id':{{ seccion.item.texto.texIdPk }}, 'texMax': {{ seccion.item.texto.texMax }}, 'texMin': {{ seccion.item.texto.texMax }}, 'texTexto': {{ seccion.item.texto.texTexto }}, 'texTipo': {{ seccion.item.texto.texTipo }} }">
+          	<input type="text"  class="form-control" value="{'id':{{ seccion.item.texto.texIdPk }}, 'texMax': {{ seccion.item.texto.texMax }}, 'texMin': {{ seccion.item.texto.texMin }}, 'texTexto': {{ seccion.item.texto.texTexto }}, 'texTipo': {{ seccion.item.texto.texTipo }} }">
         	{% endif %}
         	{% if seccion.item.texto.texTipo == 2 %}
           	<textarea class="form-control" rows="3">{'texIdPk':{{ seccion.item.texto.texIdPk }}, 'texMax': {{ seccion.item.texto.texMax }}, 'texMin': {{ seccion.item.texto.texMax }}, 'texTexto': {{ seccion.item.texto.texTexto }}, 'texTipo': {{ seccion.item.texto.texTipo }} }</textarea>
@@ -103,9 +102,9 @@
       </div>
       <div class="col-lg-2">
         <div class="btn-group">
-          <button type="button" class="btn btn-success">
+          <a href="#" type="button" class="btn btn-success btn_agregar_texto" data-tipo="0" data-bloque="{{ bloque.id }}" data-id="{{ seccion.item.texto.texIdPk }}" data-min="{{ seccion.item.texto.texMin }}" data-max="{{ seccion.item.texto.texMax }}">
             <i class="fa fa-edit"></i>
-          </button>
+          </a>
           <button type="button" class="btn btn-danger">
             <i class="fa fa-trash-o"></i>
           </button>

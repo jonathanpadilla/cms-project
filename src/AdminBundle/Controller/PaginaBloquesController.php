@@ -10,6 +10,8 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use AdminBundle\Entity\CmsBloque;
+use AdminBundle\Entity\CmsSeccion;
+use AdminBundle\Entity\CmsTexto;
 
 class PaginaBloquesController extends Controller
 {
@@ -87,6 +89,7 @@ class PaginaBloquesController extends Controller
             $tipo   = $request->get('tipo', false);
             $pagina = $request->get('pagina', false);
 
+            $html = 'Error interno';
             switch($tipo)
             {
                 case 2:$html = $this->renderView('AdminBundle:Bloques:form_bloque_publicacion.html.twig', ['pagina' => $pagina]);
@@ -103,5 +106,72 @@ class PaginaBloquesController extends Controller
         // );
         
         return new response($html);
+    }
+
+    public function agregarTextoAction(Request $request)
+    {
+        if($request->getMethod() == 'POST' )
+        {
+            $tipo   = $request->get('tipo');
+            $bloque = $request->get('bloque');
+
+            $min    = $request->get('min', null);
+            $max    = $request->get('max', null);
+            $id     = $request->get('id', null);
+
+            $html = $this->renderView('AdminBundle:Bloques:form_agregar_texto.html.twig', [
+                'tipo'      => $tipo,
+                'bloque'    => $bloque,
+                'min'       => $min,
+                'max'       => $max,
+                'id'        => $id,
+            ]);
+
+            return new response($html);
+        }
+
+        return new RedirectResponse($this->generateUrl('admin_tablero'));
+    }
+
+    public function guardarTextoAction(Request $request)
+    {
+        if($request->getMethod() == 'POST' )
+        {
+            $id         = $request->get('id');
+            $tipo       = $request->get('tipo');
+            $bloque_id  = $request->get('bloque');
+            $max        = ($request->get('max', null))?$request->get('max', null):null;
+            $min        = ($request->get('min', null))?$request->get('min', null):null;
+
+            $em = $this->getDoctrine()->getManager();
+
+            $bloque = $em->getRepository('AdminBundle:CmsBloque')->findOneBy(['bloIdPk' => $bloque_id]);
+            
+            if(!$texto = $em->getRepository('AdminBundle:CmsTexto')->findOneBy(['texIdPk' => $id]))
+            {
+                
+                $seccion = new CmsSeccion();
+                $seccion->setSecBloqueFk($bloque);
+                $seccion->setSecOrden(1);
+
+                $em->persist($seccion);
+                $em->flush();
+
+                $texto = new CmsTexto();
+                $texto->setTexSectionFk($seccion);
+                $texto->setTexTipo($tipo);
+                $texto->setTexFechaActualizacion(new \DateTime(date("Y-m-d H:i:s")));
+            }
+
+            $texto->setTexMax($max);
+            $texto->setTexMin($min);
+
+            $em->persist($texto);
+            $em->flush();
+
+            return new RedirectResponse($this->generateUrl('admin_pagina_bloques', ['id' => $bloque->getBloPaginaFk()->getPagIdPk()]));
+        }
+
+        return new RedirectResponse($this->generateUrl('admin_tablero'));
     }
 }
