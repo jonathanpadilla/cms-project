@@ -96,14 +96,6 @@ class PaginaBloquesController extends Controller
                     break;
             }
         }
-
-        // $normalizer = new ObjectNormalizer();
-        // $encoder = new JsonEncoder();
-        // $serializer = new Serializer(array($normalizer), array($encoder));
-
-        // return new response(
-        //     $serializer->serialize($result, 'json')
-        // );
         
         return new response($html);
     }
@@ -170,6 +162,64 @@ class PaginaBloquesController extends Controller
             $em->flush();
 
             return new RedirectResponse($this->generateUrl('admin_pagina_bloques', ['id' => $bloque->getBloPaginaFk()->getPagIdPk()]));
+        }
+
+        return new RedirectResponse($this->generateUrl('admin_tablero'));
+    }
+
+    public function eliminarSeccionAction(Request $request)
+    {
+        if($request->getMethod() == 'POST')
+        {
+            $id = $request->get('id', null);
+
+            $em = $this->getDoctrine()->getManager();
+
+            if($seccion = $em->getRepository('AdminBundle:CmsSeccion')->findOneBy(['secIdPk' => $id]))
+            {
+                $seccion->setSecEliminado(1);
+                $em->persist($seccion);
+                $em->flush();
+            }
+
+            $result = ['result' => true];
+
+            $normalizer = new ObjectNormalizer();
+            $encoder = new JsonEncoder();
+            $serializer = new Serializer(array($normalizer), array($encoder));
+
+            return new response(
+                $serializer->serialize($result, 'json')
+            );
+        }
+
+        return new RedirectResponse($this->generateUrl('admin_tablero'));
+    }
+
+    public function eliminarBloqueAction(Request $request)
+    {
+        if($request->getMethod() == 'POST')
+        {
+            $id = $request->get('id', null);
+
+            $em = $this->getDoctrine()->getManager();
+
+            if($bloque = $em->getRepository('AdminBundle:CmsBloque')->findOneBy(['bloIdPk' => $id]))
+            {
+                $bloque->setBloEliminado(1);
+                $em->persist($bloque);
+                $em->flush();
+            }
+
+            $result = ['result' => true];
+
+            $normalizer = new ObjectNormalizer();
+            $encoder = new JsonEncoder();
+            $serializer = new Serializer(array($normalizer), array($encoder));
+
+            return new response(
+                $serializer->serialize($result, 'json')
+            );
         }
 
         return new RedirectResponse($this->generateUrl('admin_tablero'));

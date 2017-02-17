@@ -13,7 +13,7 @@
         <div class="menu_opciones_top" style="margin-bottom: 20px;">
           <div class="btn-group">
             <button type="button" class="btn btn-primary">Agregar parametro</button>
-            <button type="button" class="btn btn-danger">Eliminar</button>
+            <button type="button" class="btn btn-danger btn_eliminar_bloque" data-id="{{ bloque.id }}">Eliminar</button>
           </div>
         </div>
         
@@ -71,7 +71,7 @@
               </ul>
             </div>
             <button type="button" class="btn btn-primary">Agregar imagen</button>
-            <button type="button" class="btn btn-danger">Eliminar bloque</button>
+            <a herf="#" type="button" class="btn btn-danger btn_eliminar_bloque" data-id="{{ bloque.id }}">Eliminar bloque</a>
           </div>
         </div>
         
@@ -105,9 +105,9 @@
           <a href="#" type="button" class="btn btn-success btn_agregar_texto" data-tipo="0" data-bloque="{{ bloque.id }}" data-id="{{ seccion.item.texto.texIdPk }}" data-min="{{ seccion.item.texto.texMin }}" data-max="{{ seccion.item.texto.texMax }}">
             <i class="fa fa-edit"></i>
           </a>
-          <button type="button" class="btn btn-danger">
+          <a href="#" type="button" class="btn btn-danger btn_eliminar_seccion" data-id="{{ seccion.id }}">
             <i class="fa fa-trash-o"></i>
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -172,7 +172,7 @@
               </ul>
             </div>
             <button type="button" class="btn btn-primary">Agregar imagen</button>
-            <button type="button" class="btn btn-danger">Eliminar bloque</button>
+            <button type="button" class="btn btn-danger btn_eliminar_bloque" data-id="{{ bloque.id }}">Eliminar bloque</button>
           </div>
         </div>
         

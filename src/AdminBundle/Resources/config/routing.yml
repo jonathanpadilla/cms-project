@@ -62,6 +62,20 @@ admin_pagina_bloques_guardar_texto:
     defaults: { _controller: AdminBundle:PaginaBloques:guardarTexto }
     methods:  [POST]
 
+admin_pagina_bloques_eliminar_seccion:
+    path:     /pagina/bloques/eliminar/seccion
+    defaults: { _controller: AdminBundle:PaginaBloques:eliminarSeccion }
+    methods:  [POST]
+    options:
+        expose: true
+
+admin_pagina_bloques_eliminar:
+    path:     /pagina/bloques/eliminar
+    defaults: { _controller: AdminBundle:PaginaBloques:eliminarBloque }
+    methods:  [POST]
+    options:
+        expose: true
+
 admin_pagina_eliminar:
     path:     /pagina/eliminar/{id}
     defaults: { _controller: AdminBundle:PaginaAgregar:eliminar, id: 0 }
